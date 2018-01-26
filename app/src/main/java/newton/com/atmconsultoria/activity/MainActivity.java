@@ -1,6 +1,7 @@
 package newton.com.atmconsultoria.activity;
 
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -38,8 +39,7 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                enviarEmail();
             }
         });
 
@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.commit();
 
         }else if (id == R.id.nav_contato) {
-
+            enviarEmail();
         } else if (id == R.id.nav_sobre) {
 
         }
@@ -123,5 +123,17 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+    public void enviarEmail(){
+
+        Intent email = new Intent(Intent.ACTION_SEND);
+        email.putExtra(Intent.EXTRA_EMAIL, new String[]{"newtoljunior@hotmail.com"});
+        email.putExtra(Intent.EXTRA_SUBJECT, "Contato pelo app");
+        email.putExtra(Intent.EXTRA_TEXT,"Mensagem automatica");
+
+        email.setType("message/rfc822");
+
+        startActivity(Intent.createChooser(email,"Escolha o App para enviar email"));
+
     }
 }
